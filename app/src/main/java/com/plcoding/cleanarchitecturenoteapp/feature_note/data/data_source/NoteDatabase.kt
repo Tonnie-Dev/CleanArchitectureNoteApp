@@ -10,7 +10,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 
 @Database(entities = [Note::class], version = 1)
 abstract class NoteDatabase :RoomDatabase() {
-    
+
     //Property must be initialized or be abstrac
  abstract val noteDAO:NoteDAO
 
