@@ -68,12 +68,7 @@ dependencies {
     // Compose dependencies
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
     implementation 'androidx.navigation:navigation-compose:2.4.0-beta02'
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
-    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
-
-    // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt'
+    in    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     //Dagger - Hilt
     implementation 'com.google.dagger:hilt-android:2.40.1'
