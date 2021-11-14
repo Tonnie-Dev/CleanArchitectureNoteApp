@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDAO {
 
-// TODO: 14-Nov-21 Confirm table Name
+
 
     /*This is not a suspend fxn since it is wrapped with Flow from Coroutines*/
     @Query("SELECT * FROM note")
