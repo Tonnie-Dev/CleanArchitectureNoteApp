@@ -14,4 +14,9 @@ abstract class NoteDatabase :RoomDatabase() {
     //Property must be initialized or be abstrac
  abstract val noteDAO:NoteDAO
 
+ companion object{
+
+     const val DB_NAME = "notes_db"
+ }
+
 }
