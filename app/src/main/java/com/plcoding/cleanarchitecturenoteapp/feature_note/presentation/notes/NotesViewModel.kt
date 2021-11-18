@@ -37,6 +37,8 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
 
                     notesUseCases.deleteNoteUseCase(event.note)
 
+                    //set last deleted note on deletion event
+                    recentlyDeletedNote = event.note
                 }
 
             }
