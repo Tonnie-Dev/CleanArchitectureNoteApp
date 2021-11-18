@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNotesUseCase
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.NotesUseCase
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.util.NoteOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,7 +32,18 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
         when (event) {
 
 
-            is NotesEvent.Order -> {}
+            is NotesEvent.Order -> {
+
+                //check if the radio button option is the same
+
+                if (state.value.noteOrder::class == event.noteOrder::class
+                    && state.value.noteOrder.orderType == event.noteOrder.orderType){
+
+                        //do nothing
+                    return
+                }
+
+            }
             is NotesEvent.DeleteNote -> {
 
                 viewModelScope.launch {
@@ -44,7 +57,16 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
             }
             is NotesEvent.RestoreNote -> {
 
-                state.value
+                viewModelScope.launch {
+
+                    //insert note if not null else return to the call
+                    notesUseCases.addNoteUseCase(recentlyDeletedNote ?: return@launch)
+
+                    //invalidate the note so that it is only inserted once and subsequent
+                    //trials will not be inserted
+
+                    recentlyDeletedNote = null
+                }
             }
             is NotesEvent.ToggleOrderSelection -> {
 
@@ -58,5 +80,17 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
                     NotesState(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
             }
         }
+    }
+
+    private fun getNotes(noteOrder: NoteOrder){
+
+        notesUseCases.getNotesUseCase(noteOrder = noteOrder)
+            .onEach {
+                notes ->
+
+                state.value = state.value.copy(notes = notes,
+                noteOrder = noteOrder)
+
+            }
     }
 }
