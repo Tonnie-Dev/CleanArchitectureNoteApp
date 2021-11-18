@@ -3,6 +3,7 @@ package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNotesUseCase
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.NotesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : ViewModel() {
+
+    //keep a reference to the last deleted note
+
+    var recentlyDeletedNote: Note? = null
 
     //state comes down & will be observed by the UI
 

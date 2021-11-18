@@ -22,7 +22,7 @@ class AddNoteUseCase (private val repository: NoteRepository){
             throw InvalidNoteException(message = "The content of the note cannot be empty")
         }
 
-
+//if the above 2 ifs are false we just insert the note
         repository.insertNote(note)
     }
 
