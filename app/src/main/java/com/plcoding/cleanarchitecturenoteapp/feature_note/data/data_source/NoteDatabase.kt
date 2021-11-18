@@ -9,14 +9,15 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 
 
 @Database(entities = [Note::class], version = 1)
-abstract class NoteDatabase :RoomDatabase() {
+abstract class NoteDatabase : RoomDatabase() {
 
-    //Property must be initialized or be abstrac
- abstract val noteDAO:NoteDAO
+    /*Property must be initialized or be abstract so that the
+    database knows about it*/
+    abstract val noteDAO: NoteDAO
 
- companion object{
+    companion object {
 
-     const val DB_NAME = "notes_db"
- }
+        const val DB_NAME = "notes_db"
+    }
 
 }

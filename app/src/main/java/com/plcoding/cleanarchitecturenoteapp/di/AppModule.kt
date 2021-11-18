@@ -3,6 +3,11 @@ package com.plcoding.cleanarchitecturenoteapp.di
 import android.content.Context
 import androidx.room.Room
 import com.plcoding.cleanarchitecturenoteapp.feature_note.data.data_source.NoteDatabase
+import com.plcoding.cleanarchitecturenoteapp.feature_note.data.repository.NoteRepositoryImpl
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.DeleteNoteUseCase
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNotesUseCase
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.NotesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +24,7 @@ import javax.inject.Singleton
 object AppModule {
 
 
-    //ROOM
+    //PROVIDER 1 - ROOM
     @Provides
     @Singleton
 
@@ -34,6 +39,35 @@ object AppModule {
             NoteDatabase.DB_NAME
         )
             .build()
+
+    }
+
+    //PROVIDER 2 - REPO
+
+    /*Repo needs a DAO
+    * Because we haven't provided the DAO here instead
+    * we just provided NoteDatabase so we simply pass
+    * the database and retrieve the DAO from it.
+    * */
+    @Provides
+    @Singleton
+    fun provideNotesRepository(db: NoteDatabase): NoteRepository {
+
+
+        return NoteRepositoryImpl(db.noteDAO)
+    }
+
+    //PROVIDER 3 - USE_CASES - returns the Use Cases Container
+    @Provides
+    @Singleton
+    fun providesUseCasesContainer(
+       repository: NoteRepository
+    ): NotesUseCase {
+
+        return NotesUseCase(
+            deleteNoteUseCase =DeleteNoteUseCase(repo = repository),
+           getNotesUseCase = GetNotesUseCase(repo = repository)
+            )
 
     }
 }
