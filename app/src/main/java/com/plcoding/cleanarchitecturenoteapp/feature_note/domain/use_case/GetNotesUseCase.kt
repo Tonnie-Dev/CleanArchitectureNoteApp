@@ -18,7 +18,7 @@ class GetNotesUseCase(private val repo: NoteRepository) {
 
         //return the list from the repository
         return repo.getNotes()
-        //then map the returned notes
+        //then map the returned notes/ flow
             .map { notes ->
 
                 //determine order type (Descending or Ascending)

@@ -29,6 +29,8 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
     private var getNotesJob: Job? = null
 
     init {
+
+        // we want to load some notes initially
         getNotes(noteOrder = NoteOrder.Date(OrderType.Descending))
     }
 
@@ -53,6 +55,9 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
                         //do nothing
                     return
                 }
+
+                //otherwise load notes with the new order
+                getNotes(event.noteOrder)
 
             }
             is NotesEvent.DeleteNote -> {
