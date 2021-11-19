@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
@@ -48,9 +50,11 @@ Canvas(modifier = Modifier.matchParentSize()){
         )
 
         drawRoundRect(
-            size = size,
+            size = Size(cutCornerSize.toPx() + 100f, cutCornerSize.toPx() + 100f),
+
             color = Color(ColorUtils.blendARGB(note.color, 0x000000,0.2f)),
-            cornerRadius = CornerRadius(cornerRadius.toPx())
+            cornerRadius = CornerRadius(cornerRadius.toPx()),
+            topLeft = Offset(size.width - cutCornerSize.toPx(), -100f)
         )
     }
 
