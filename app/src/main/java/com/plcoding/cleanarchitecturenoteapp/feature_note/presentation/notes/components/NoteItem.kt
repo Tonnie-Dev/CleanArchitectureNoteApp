@@ -5,9 +5,13 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.ColorUtils
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 
 
@@ -34,6 +38,21 @@ Canvas(modifier = Modifier.matchParentSize()){
         close()
     }
 
+
+    clipPath(path = clipPath){
+
+        drawRoundRect(
+            size = size,
+            color = Color(note.color),
+            cornerRadius = CornerRadius(cornerRadius.toPx())
+        )
+
+        drawRoundRect(
+            size = size,
+            color = Color(ColorUtils.blendARGB(note.color, 0x000000,0.2f)),
+            cornerRadius = CornerRadius(cornerRadius.toPx())
+        )
+    }
 
 }
 
