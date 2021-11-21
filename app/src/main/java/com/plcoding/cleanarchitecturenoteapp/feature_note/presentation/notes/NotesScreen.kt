@@ -1,9 +1,8 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes
 
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,7 +24,9 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
             onClick = { /*TODO*/ },
             backgroundColor = MaterialTheme.colors.primary
         ) {
-            
+            //Content of FAB
+
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Add note")
         }
     }
 
