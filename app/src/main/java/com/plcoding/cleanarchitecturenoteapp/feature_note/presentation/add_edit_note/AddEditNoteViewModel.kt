@@ -1,4 +1,4 @@
-package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation
+package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note
 
 import androidx.lifecycle.ViewModel
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNoteByIdUseCase
