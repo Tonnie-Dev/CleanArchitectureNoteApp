@@ -1,7 +1,10 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.NoteItem
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.OrderSection
 
 @ExperimentalAnimationApi
@@ -80,10 +84,43 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
                     noteOrder = state.noteOrder,
-                    onOrderChange ={
+                    onOrderChange = {
 
-                        viewModel.onEvent(NotesEvent.Order(it))}
+                        viewModel.onEvent(NotesEvent.Order(it))
+                    }
                 )
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            //NOTES_LIST_SECTION
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+
+                items(state.notes) { note ->
+                    NoteItem(note = note,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+
+                                // TODO: 22-Nov-21 Navigate to 2nd Screen
+                            },
+
+                        onDelete = {
+                            viewModel.onEvent(NotesEvent.DeleteNote(note = note))
+
+                            /*showing a snackbar needs a coroutine as it takes
+                            * time to show*/
+
+                          val result =  scaffoldState.snackbarHostState.showSnackbar(
+                                message = "",
+                                actionLabel = null,
+                                duration =
+                            )
+                        }
+                    )
+                }
+
             }
         }
     }
