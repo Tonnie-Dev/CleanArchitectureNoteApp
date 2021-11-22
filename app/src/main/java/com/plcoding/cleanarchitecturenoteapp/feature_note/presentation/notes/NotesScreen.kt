@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.NoteItem
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.OrderSection
+import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
 @Composable
@@ -27,6 +28,12 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
 //variables
     val state by viewModel.state
     val scaffoldState = rememberScaffoldState()
+
+    /*Return a CoroutineScope bound to this point in the composition using
+     the optional CoroutineContext provided by getContext. getContext will
+     only be called once and the same CoroutineScope instance will be
+     returned across recompositions.*/
+
     val scope = rememberCoroutineScope()
 
 
@@ -110,15 +117,39 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
                             viewModel.onEvent(NotesEvent.DeleteNote(note = note))
 
                             /*showing a snackbar needs a coroutine as it takes
-                            * time to show*/
+                            * time to show
+                            *
+                            * */
 
-                          val result =  scaffoldState.snackbarHostState.showSnackbar(
-                                message = "",
-                                actionLabel = null,
-                                duration =
-                            )
+
+                            //'showSnackbar' should be called only from a coroutine or another suspend function
+                           scope.launch {
+
+
+                               //we need to put snackbar as a val to check the action
+                               val result =  scaffoldState.snackbarHostState.showSnackbar(
+                                   message = "Note Deleted",
+                                   actionLabel = "Undo",
+
+                                   )
+
+                               //check result for action performed
+
+                               if (result==SnackbarResult.ActionPerformed){
+
+                                   viewModel.onEvent(NotesEvent.RestoreNote)
+                               }
+                           }
+
+
+
+
                         }
                     )
+
+                    //put spaces between note items
+
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
             }
