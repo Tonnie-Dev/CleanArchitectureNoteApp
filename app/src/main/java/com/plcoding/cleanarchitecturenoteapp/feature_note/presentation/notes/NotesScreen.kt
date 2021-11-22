@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,8 +40,8 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
 
             .fillMaxSize()
             .padding(it)) {
-            
-            
+
+
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -47,7 +49,17 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
             ) {
 
                 Text(text = "Your Notes", style = MaterialTheme.typography.h4)
+
+
+                   IconButton(onClick = { /*TODO*/ }) {
+                   
+                                       Icon(imageVector = Icons.Default.Sort,
+                                  
+                                           contentDescription ="Sort" )
+                                   }
             }
+            
+            
         }
     }
 
