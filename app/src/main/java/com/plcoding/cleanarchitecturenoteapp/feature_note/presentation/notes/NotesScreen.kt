@@ -1,5 +1,6 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,8 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.OrderSection
 
+@ExperimentalAnimationApi
 @Composable
 fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
 
@@ -36,12 +40,14 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
         }
     }) {
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
 
-            .fillMaxSize()
-            .padding(it)) {
+                .fillMaxSize()
+                .padding(it)
+        ) {
 
-
+//HEADER SECTION
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -51,15 +57,34 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
                 Text(text = "Your Notes", style = MaterialTheme.typography.h4)
 
 
-                    IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { viewModel.onEvent(NotesEvent.ToggleOrderSelection) }) {
 
-                                        Icon(imageVector = Icons.Default.Sort,
+                    Icon(
+                        imageVector = Icons.Default.Sort,
 
-                                            contentDescription ="Sort" )
-                                    }
+                        contentDescription = "Sort"
+                    )
+                }
             }
-            
-            
+
+            //ORDER SECTION
+            AnimatedVisibility(
+                visible = state.isOrderSelectionVisible,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            ) {
+
+
+                OrderSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    noteOrder = state.noteOrder,
+                    onOrderChange ={
+
+                        viewModel.onEvent(NotesEvent.Order(it))}
+                )
+            }
         }
     }
 
