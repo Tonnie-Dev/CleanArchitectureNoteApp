@@ -7,6 +7,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNoteByIdUseCase
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.NotesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +26,8 @@ class AddEditNoteViewModel @Inject constructor(private val useCase: NotesUseCase
     private set
 
 
+    var eventFlow = MutableSharedFlow<UIEvent>()
+    private set
 
     sealed class UIEvent{
 
