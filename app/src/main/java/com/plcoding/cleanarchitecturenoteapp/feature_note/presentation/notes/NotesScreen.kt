@@ -51,12 +51,12 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel) {
                 Text(text = "Your Notes", style = MaterialTheme.typography.h4)
 
 
-                   IconButton(onClick = { /*TODO*/ }) {
-                   
-                                       Icon(imageVector = Icons.Default.Sort,
-                                  
-                                           contentDescription ="Sort" )
-                                   }
+                    IconButton(onClick = { /*TODO*/ }) {
+
+                                        Icon(imageVector = Icons.Default.Sort,
+
+                                            contentDescription ="Sort" )
+                                    }
             }
             
             
