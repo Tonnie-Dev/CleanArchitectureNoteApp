@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.NoteItem
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.OrderSection
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.util.Screens
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -41,7 +42,10 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
     //Scaffold
     Scaffold(floatingActionButton = {
         FloatingActionButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+//we don't pass any parameters when creating a new note
+                      navController.navigate(route = Screens.AddEditNoteScreen.route)
+            },
             backgroundColor = MaterialTheme.colors.primary
         ) {
             //Content of FAB
@@ -111,7 +115,9 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
                             .fillMaxWidth()
                             .clickable {
 
-                                // TODO: 22-Nov-21 Navigate to 2nd Screen
+                            navController.navigate(Screens.AddEditNoteScreen.route +
+
+                            "?noteId=${note.id}&noteColor = ${note.color}")
                             },
 
                         onDelete = {
