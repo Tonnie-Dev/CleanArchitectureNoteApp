@@ -19,8 +19,9 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.Not
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.util.Screens
 import com.plcoding.cleanarchitecturenoteapp.ui.theme.CleanArchitectureNoteAppTheme
 import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
-@EntryPoint // to inject viewModel with Dagger Hilt into this activity
+@AndroidEntryPoint // to inject viewModel with Dagger Hilt into this activity
 @ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {
 
