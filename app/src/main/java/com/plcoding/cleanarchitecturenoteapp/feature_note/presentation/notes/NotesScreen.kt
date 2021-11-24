@@ -65,7 +65,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
 
 //HEADER SECTION
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
