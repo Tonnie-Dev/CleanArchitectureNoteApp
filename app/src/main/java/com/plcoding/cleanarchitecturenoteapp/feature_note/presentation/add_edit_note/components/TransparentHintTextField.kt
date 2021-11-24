@@ -26,7 +26,7 @@ fun TransparentHintTextField(
 ) {
 
     // TODO: 23-Nov-21 test the up & below modifier
-    Box(modifier = modifier ){
+    Box(modifier = modifier) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
@@ -39,8 +39,10 @@ fun TransparentHintTextField(
                     onFocusChange(it)
                 }
         )
-        if (isHintVisible){
 
+
+        if (isHintVisible) {
+// TODO: 24-Nov-21 test this text inside the basicTextField
             Text(text = hint, style = textStyle, color = Color.DarkGray)
 
         }
