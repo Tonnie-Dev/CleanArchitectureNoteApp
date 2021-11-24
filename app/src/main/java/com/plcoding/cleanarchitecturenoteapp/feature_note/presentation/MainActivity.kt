@@ -21,8 +21,9 @@ import com.plcoding.cleanarchitecturenoteapp.ui.theme.CleanArchitectureNoteAppTh
 import dagger.hilt.EntryPoint
 
 @EntryPoint // to inject viewModel with Dagger Hilt into this activity
+@ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {
-    @ExperimentalAnimationApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
