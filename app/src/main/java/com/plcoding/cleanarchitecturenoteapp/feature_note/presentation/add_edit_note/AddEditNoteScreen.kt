@@ -10,10 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -23,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,6 +48,30 @@ fun AddEditNoteScreen(
     //to animate the Animatable Color we need a CoroutineScope
     val scope = rememberCoroutineScope()
 
+    //show once
+    LaunchedEffect(key1 = true ){
+
+        viewModel.eventFlow.collectLatest {
+
+            event ->
+
+            when(event){
+
+
+                is AddEditNoteViewModel.UIEvent.ShowSnackbar -> {
+
+
+                    scaffoldState.snackbarHostState.showSnackbar(message = event.message)
+                }
+                is AddEditNoteViewModel.UIEvent.SaveNote -> {
+
+                    navController.navigateUp()
+                }
+            }
+        }
+
+    }
+
 
     Scaffold(
         floatingActionButton = {
@@ -68,14 +91,14 @@ fun AddEditNoteScreen(
         },
 
         scaffoldState = scaffoldState
-    ) {
+    ) { paddingValues ->
 
         //Scaffold Body
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(noteBackgroundAnimatable.value)
-                .padding(it)
+                .padding(paddingValues)
         ) {
 
 
@@ -105,8 +128,8 @@ fun AddEditNoteScreen(
                                 shape = CircleShape,
                                 color = if (viewModel.noteColor.value == colorInt)
                                     Color.Black else Color.Transparent
-                            ).clickable {
-
+                            )
+                            .clickable {
 
 
                                 //we want to animate our color to a new color
@@ -121,11 +144,46 @@ fun AddEditNoteScreen(
                                     )
 
                                 }
-                               viewModel.onEvent(event = AddEditNoteEvent.ChangeColor(color = colorInt))
+                                viewModel.onEvent(event = AddEditNoteEvent.ChangeColor(color = colorInt))
                             }
                     )
                 }
             }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TransparentHintTextField(
+                text = titleState.text,
+                hint = titleState.hint,
+                onValueChange = {
+                                viewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))
+
+                },
+                onFocusChange = {
+
+
+                    viewModel.onEvent(AddEditNoteEvent.ChangeTitleFocus(it))
+                }, isHintVisible = titleState.isHintVisible
+            , singleLine = true, textStyle = MaterialTheme.typography.h5
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TransparentHintTextField(
+                text = contentState.text,
+                hint = contentState.hint,
+                onValueChange = {
+                    viewModel.onEvent(AddEditNoteEvent.EnteredContent(it))
+                },
+                onFocusChange = {
+
+                    viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))
+                },
+                isHintVisible = contentState.isHintVisible,
+                textStyle = MaterialTheme.typography.body1,
+                modifier = Modifier.fillMaxHeight()
+            )
         }
 
     }
