@@ -60,7 +60,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
             modifier = Modifier
 
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(16.dp)
         ) {
 
 //HEADER SECTION
