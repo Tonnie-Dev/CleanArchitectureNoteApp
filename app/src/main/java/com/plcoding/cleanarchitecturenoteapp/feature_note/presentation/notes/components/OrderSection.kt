@@ -61,7 +61,6 @@ fun OrderSection(
                 selected = noteOrder.orderType is OrderType.Ascending,
                 onSelected = { onOrderChange(noteOrder.copy(OrderType.Ascending)) }
             )
-
             Spacer(modifier = Modifier.width(8.dp))
 
             //R5

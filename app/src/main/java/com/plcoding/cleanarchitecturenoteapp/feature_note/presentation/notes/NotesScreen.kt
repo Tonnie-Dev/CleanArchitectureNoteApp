@@ -107,7 +107,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
             Spacer(modifier = Modifier.height(16.dp))
 
             //NOTES_LIST_SECTION
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
 
                 items(state.notes) { note ->
                     NoteItem(note = note,
