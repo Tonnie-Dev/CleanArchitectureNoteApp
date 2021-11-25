@@ -21,7 +21,7 @@ fun OrderSection(
         //R1
         Row(modifier = modifier.fillMaxWidth()) {
 
-            DefaultRadioButton(text = "title",
+            DefaultRadioButton(text = "Title",
                 selected = noteOrder is NoteOrder.Title,
                 onSelected = { onOrderChange(NoteOrder.Title(noteOrder.orderType)) })
 
@@ -44,7 +44,7 @@ fun OrderSection(
             DefaultRadioButton(
                 text = "Color",
                 selected = noteOrder is NoteOrder.Color,
-                onSelected = { onOrderChange(NoteOrder.Date(noteOrder.orderType)) }
+                onSelected = { onOrderChange(NoteOrder.Color(noteOrder.orderType)) }
             )
 
         }

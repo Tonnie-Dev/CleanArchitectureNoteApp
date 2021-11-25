@@ -102,7 +102,7 @@ fun AddEditNoteScreen(
         ) {
 
 
-            //Color Row
+            //COLORS_ROW
 
             Row(
                 modifier = Modifier
@@ -153,6 +153,7 @@ fun AddEditNoteScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            //NOTE_TITLE_TEXTFIELD
             TransparentHintTextField(
                 text = titleState.text,
                 hint = titleState.hint,
@@ -170,6 +171,7 @@ fun AddEditNoteScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            //NOTE_CONTENT_TEXTFIELD
             TransparentHintTextField(
                 text = contentState.text,
                 hint = contentState.hint,
