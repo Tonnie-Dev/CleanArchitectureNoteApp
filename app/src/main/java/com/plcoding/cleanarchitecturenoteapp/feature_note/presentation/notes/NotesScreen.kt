@@ -54,7 +54,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
                 contentDescription = "Add note"
             )
         }
-    }) { paddingValues ->
+    }) {
 
         Column(
             modifier = Modifier
