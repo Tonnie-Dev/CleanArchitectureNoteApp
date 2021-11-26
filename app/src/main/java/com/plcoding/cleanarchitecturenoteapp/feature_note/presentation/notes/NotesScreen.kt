@@ -93,7 +93,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
                 OrderSection(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                        .padding(vertical = 8.dp),
                     noteOrder = state.noteOrder,
                     onOrderChange = {
 
