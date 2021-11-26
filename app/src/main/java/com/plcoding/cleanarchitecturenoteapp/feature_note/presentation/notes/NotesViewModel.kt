@@ -92,8 +92,9 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
 
                 //state.value = NotesState().copy(isOrderSelectionVisible = !true)
 
-                state.value =
-                    NotesState(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
+               // state.value = NotesState(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
+
+                state.value = state.value.copy(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
             }
         }
     }
