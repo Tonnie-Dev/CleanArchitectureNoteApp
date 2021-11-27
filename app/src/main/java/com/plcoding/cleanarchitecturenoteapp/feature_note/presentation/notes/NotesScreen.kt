@@ -124,8 +124,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
 
                             /*showing a snackbar needs a coroutine as it takes
                             * time to show
-                            *
-                            * */
+                            */
 
 
                             //'showSnackbar' should be called only from a coroutine or another suspend function
