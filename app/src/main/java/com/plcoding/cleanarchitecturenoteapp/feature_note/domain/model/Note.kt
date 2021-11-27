@@ -2,7 +2,7 @@ package com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.plcoding.cleanarchitecturenoteapp.ui.theme.*
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.ui.theme.*
 
 //Mark with @Entity to represent ROOM table
 @Entity

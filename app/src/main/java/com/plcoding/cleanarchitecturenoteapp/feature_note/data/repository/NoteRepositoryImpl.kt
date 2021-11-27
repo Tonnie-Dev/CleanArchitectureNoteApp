@@ -4,8 +4,9 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.data.data_source.NoteD
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NoteRepositoryImpl(private val dao: NoteDAO): NoteRepository {
+class NoteRepositoryImpl @Inject constructor(private val dao: NoteDAO): NoteRepository {
     override fun getNotes(): Flow<List<Note>> {
 
         return dao.getNotes()
