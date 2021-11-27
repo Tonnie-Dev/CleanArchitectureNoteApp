@@ -22,6 +22,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.com
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes.components.OrderSection
 import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.util.Screens
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @ExperimentalAnimationApi
 @Composable
@@ -44,7 +45,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
         FloatingActionButton(
             onClick = {
 //we don't pass any parameters when creating a new note
-                      navController.navigate(route = Screens.AddEditNoteScreen.route)
+                navController.navigate(route = Screens.AddEditNoteScreen.route)
             },
             backgroundColor = MaterialTheme.colors.primary
         ) {
@@ -114,40 +115,51 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
                             .fillMaxWidth()
                             .clickable {
 
-                            navController.navigate(Screens.AddEditNoteScreen.route +
+                                navController.navigate(
+                                    Screens.AddEditNoteScreen.route +
 
-                            "?noteId=${note.id}&noteColor = ${note.color}")
+                                            "?noteId=${note.id}&noteColor=${note.color}"
+                                )
                             },
 
                         onDelete = {
-                            viewModel.onEvent(NotesEvent.DeleteNote(note = note))
 
-                            /*showing a snackbar needs a coroutine as it takes
+                            viewModel.onEvent(NotesEvent.DeleteNote(note))
+                            scope.launch {
+                                val result = scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "Note deleted",
+                                    actionLabel = "Undo"
+                                )
+                                if(result == SnackbarResult.ActionPerformed) {
+                                    viewModel.onEvent(NotesEvent.RestoreNote)
+                                }
+                            }
+                       /*     viewModel.onEvent(NotesEvent.DeleteNote(note = note))
+
+                            *//*showing a snackbar needs a coroutine as it takes
                             * time to show
-                            */
+                            *//*
 
-
+                            Timber.i("on Delete called from Notes Screen")
                             //'showSnackbar' should be called only from a coroutine or another suspend function
-                           scope.launch {
+                            scope.launch {
+                                Timber.i("Coroutine launched for snackbar")
 
+                                //we need to put snackbar as a val to check the action
+                                val result = scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "Note Deleted",
+                                    actionLabel = "Undo",
 
-                               //we need to put snackbar as a val to check the action
-                               val result =  scaffoldState.snackbarHostState.showSnackbar(
-                                   message = "Note Deleted",
-                                   actionLabel = "Undo",
+                                    )
 
-                                   )
+                                //check result for action performed
 
-                               //check result for action performed
+                                if (result == SnackbarResult.ActionPerformed) {
 
-                               if (result==SnackbarResult.ActionPerformed){
-
-                                   viewModel.onEvent(NotesEvent.RestoreNote)
-                               }
-                           }
-
-
-
+                                    viewModel.onEvent(NotesEvent.RestoreNote)
+                                }
+                            }
+*/
 
                         }
                     )
