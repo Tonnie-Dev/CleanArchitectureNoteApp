@@ -48,7 +48,13 @@ fun AddEditNoteScreen(
     //to animate the Animatable Color we need a CoroutineScope
     val scope = rememberCoroutineScope()
 
+
+
     //show once
+
+
+    /*This will be needed to actually listen to events from the event flow that
+    we have inside the ViewModel*/
     LaunchedEffect(key1 = true ){
 
         viewModel.eventFlow.collectLatest {
