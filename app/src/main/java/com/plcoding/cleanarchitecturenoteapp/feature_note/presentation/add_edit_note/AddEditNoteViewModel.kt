@@ -1,6 +1,8 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -22,14 +24,14 @@ class AddEditNoteViewModel @Inject constructor(
     ViewModel() {
 
     //state
-    var noteTitle = mutableStateOf(NoteTextFieldState(hint = "Enter title ..."))
+    var noteTitle by mutableStateOf(NoteTextFieldState(hint = "Enter title ..."))
         private set
 
-    var noteContent = mutableStateOf(NoteTextFieldState(hint = "Enter some content"))
+    var noteContent by mutableStateOf(NoteTextFieldState(hint = "Enter some content"))
         private set
 
     //toArg() converts Jetpack color to int
-    var noteColor = mutableStateOf(Note.noteColors.random().toArgb())
+    var noteColor by mutableStateOf(Note.noteColors.random().toArgb())
         private set
 
 
@@ -58,12 +60,12 @@ class AddEditNoteViewModel @Inject constructor(
                     useCase.getNoteByIdUseCase(noteId)?.also{ note ->
 
                         currentNoteId = note.id
-                        noteTitle.value =
-                            noteTitle.value.copy(text = note.title, isHintVisible = false)
+                        noteTitle =
+                            noteTitle.copy(text = note.title, isHintVisible = false)
 
-                        noteContent.value = noteContent.value.copy(text = note.content, isHintVisible = false)
+                        noteContent = noteContent.copy(text = note.content, isHintVisible = false)
 
-                        noteColor.value = note.color
+                        noteColor = note.color
 
                     }
                 }
@@ -77,33 +79,33 @@ class AddEditNoteViewModel @Inject constructor(
 //update title
             is AddEditNoteEvent.EnteredTitle -> {
 
-                noteTitle.value = noteTitle.value.copy(text = event.value)
+                noteTitle = noteTitle.copy(text = event.value)
             }
 
             //hide hint if focussed and title is blank
             is AddEditNoteEvent.ChangeTitleFocus -> {
 
 
-                noteTitle.value =
-                    noteTitle.value.copy(
+                noteTitle =
+                    noteTitle.copy(
                         isHintVisible = !event.focusState.isFocused &&
-                                noteTitle.value.text.isBlank()
+                                noteTitle.text.isBlank()
                     )
             }
 
             //update content
             is AddEditNoteEvent.EnteredContent -> {
 
-                noteContent.value = noteContent.value.copy(text = event.value)
+                noteContent = noteContent.copy(text = event.value)
             }
 
             //hide hint on the content TextField
             is AddEditNoteEvent.ChangeContentFocus -> {
 
 
-                noteContent.value = noteContent.value.copy(
+                noteContent = noteContent.copy(
                     isHintVisible = !event.focusState.isFocused &&
-                            noteContent.value.text.isBlank()
+                            noteContent.text.isBlank()
                 )
             }
 
@@ -111,7 +113,7 @@ class AddEditNoteViewModel @Inject constructor(
             is AddEditNoteEvent.ChangeColor -> {
 
 
-                noteColor.value = event.color
+                noteColor = event.color
             }
 
             //save note into db
@@ -126,10 +128,10 @@ class AddEditNoteViewModel @Inject constructor(
 
                         useCase.addNoteUseCase(
                             Note(
-                                title = noteTitle.value.text,
-                                content = noteContent.value.text,
+                                title = noteTitle.text,
+                                content = noteContent.text,
                                 timeStamp = System.currentTimeMillis(),
-                                color = noteColor.value,
+                                color = noteColor,
                                 id = currentNoteId
                             )
                         )

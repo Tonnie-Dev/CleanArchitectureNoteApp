@@ -33,8 +33,8 @@ fun AddEditNoteScreen(
 
     //get references for the states from the ViewModel
 
-    val titleState by viewModel.noteTitle
-    val contentState by viewModel.noteContent
+    val titleState = viewModel.noteTitle
+    val contentState = viewModel.noteContent
 
 //Contains basic screen state, e.g. Drawer configuration,sizes of components
     val scaffoldState = rememberScaffoldState()
@@ -42,7 +42,7 @@ fun AddEditNoteScreen(
 
     val noteBackgroundAnimatable = remember {
         //initial color to be animated
-        Animatable(Color(if (noteColor != -1) noteColor else viewModel.noteColor.value))
+        Animatable(Color(if (noteColor != -1) noteColor else viewModel.noteColor))
     }
 
     //to animate the Animatable Color we need a CoroutineScope
@@ -132,7 +132,7 @@ fun AddEditNoteScreen(
                             .border(
                                 width = 3.dp,
                                 shape = CircleShape,
-                                color = if (viewModel.noteColor.value == colorInt)
+                                color = if (viewModel.noteColor == colorInt)
                                     Color.Black else Color.Transparent
                             )
                             .clickable {
