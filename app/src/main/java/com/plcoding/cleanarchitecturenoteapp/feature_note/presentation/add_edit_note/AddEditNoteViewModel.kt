@@ -14,6 +14,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_case.NotesU
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

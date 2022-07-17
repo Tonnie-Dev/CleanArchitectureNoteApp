@@ -29,8 +29,9 @@ import timber.log.Timber
 fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltViewModel()) {
 
 //variables
-    val state by viewModel.state
+    val state = viewModel.state
     val scaffoldState = rememberScaffoldState()
+    Timber.i("At the Onset length is ${state.notes.size}")
 
     /*Return a CoroutineScope bound to this point in the composition using
      the optional CoroutineContext provided by getContext. getContext will
@@ -38,7 +39,7 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
      returned across recompositions.*/
 
     val scope = rememberCoroutineScope()
-
+   // Timber.i("Overview Item 1 state: ${state.notes[0].title}")
 
     //Scaffold
     Scaffold(floatingActionButton = {
@@ -63,8 +64,8 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+                    .fillMaxSize()
+                    .padding(16.dp)
         ) {
 
 //HEADER SECTION
@@ -97,8 +98,8 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
 
                 OrderSection(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
                     noteOrder = state.noteOrder,
                     onOrderChange = {
 
@@ -116,46 +117,46 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
                 items(state.notes) { note ->
                     NoteItem(note = note,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
+                                .fillMaxWidth()
+                                .clickable {
 
-                                navController.navigate(
-                                    Screens.AddEditNoteScreen.route +
+                                    navController.navigate(
+                                            Screens.AddEditNoteScreen.route +
 
-                                            "?noteId=${note.id}&noteColor=${note.color}"
-                                )
-                            },
+                                                    "?noteId=${note.id}&noteColor=${note.color}"
+                                    )
+                                },
 
                         onDelete = {
 
-                   viewModel.onEvent(NotesEvent.DeleteNote(note = note))
+
 
                          /* showing a snackbar needs a coroutine as it takes
                            time to show*/
 
-
-                            Timber.i("on Delete called from Notes Screen")
                             //'showSnackbar' should be called only from a coroutine or another suspend function
                             scope.launch {
-                                Timber.i("Coroutine launched for snackbar")
-
+                                viewModel.onEvent(NotesEvent.DeleteNote(note = note))
                                 //we need to put snackbar as a val to check the action
                                 val result = scaffoldState.snackbarHostState.showSnackbar(
                                     message = "Note Deleted",
                                     actionLabel = "Undo",
 
                                     )
-
+                                Timber.i("At B4R length is ${state.notes.size}")
                                 //check result for action performed
-
                                 if (result==SnackbarResult.ActionPerformed) {
 
                                     viewModel.onEvent(NotesEvent.RestoreNote)
                                 }
                             }
 
+                            Timber.i("At After Launch length is ${state.notes.size}")
+
 
                         }
+
+
                     )
 
                     //put spaces between note items

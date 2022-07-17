@@ -1,6 +1,8 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.notes
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
@@ -13,13 +15,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : ViewModel() {
     //state comes down & will be observed by the UI
 
-    var state = mutableStateOf(NotesState())
+    var state by mutableStateOf(NotesState())
         private set
     //keep a reference to the last deleted note
 
@@ -32,6 +35,7 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
 
         // we want to load some notes initially
         getNotes(noteOrder = NoteOrder.Date(OrderType.Descending))
+
     }
 
 
@@ -49,8 +53,8 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
 
                 //check if the radio button option is the same
 
-                if (state.value.noteOrder::class == event.noteOrder::class
-                    && state.value.noteOrder.orderType == event.noteOrder.orderType){
+                if (state.noteOrder::class == event.noteOrder::class
+                    && state.noteOrder.orderType == event.noteOrder.orderType){
 
                         //do nothing
                     return
@@ -94,12 +98,14 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
 
                // state.value = NotesState(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
 
-                state.value = state.value.copy(isOrderSelectionVisible = !state.value.isOrderSelectionVisible)
+                state= state.copy(isOrderSelectionVisible = !state.isOrderSelectionVisible)
             }
         }
     }
 
     private fun getNotes(noteOrder: NoteOrder){
+
+        Timber.i("getNotes called")
 
         //before we get a new flow/ new coroutine job
 
@@ -110,7 +116,7 @@ class NotesViewModel @Inject constructor(val notesUseCases: NotesUseCase) : View
             .onEach {
                 notes ->
 
-                state.value = state.value.copy(notes = notes,
+                state= state.copy(notes = notes,
                 noteOrder = noteOrder)
 
             }.launchIn(viewModelScope)
