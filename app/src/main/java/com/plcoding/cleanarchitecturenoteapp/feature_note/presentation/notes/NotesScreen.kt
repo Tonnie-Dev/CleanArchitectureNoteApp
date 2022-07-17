@@ -111,60 +111,71 @@ fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltVi
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            //NOTES_LIST_SECTION
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            if (state.notes.isEmpty()){
 
-                items(state.notes) { note ->
-                    NoteItem(note = note,
-                        modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
+                Column(Modifier.fillMaxSize()) {
 
-                                    navController.navigate(
-                                            Screens.AddEditNoteScreen.route +
-
-                                                    "?noteId=${note.id}&noteColor=${note.color}"
-                                    )
-                                },
-
-                        onDelete = {
-
-
-
-                         /* showing a snackbar needs a coroutine as it takes
-                           time to show*/
-
-                            //'showSnackbar' should be called only from a coroutine or another suspend function
-                            scope.launch {
-                                viewModel.onEvent(NotesEvent.DeleteNote(note = note))
-                                //we need to put snackbar as a val to check the action
-                                val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Note Deleted",
-                                    actionLabel = "Undo",
-
-                                    )
-                                Timber.i("At B4R length is ${state.notes.size}")
-                                //check result for action performed
-                                if (result==SnackbarResult.ActionPerformed) {
-
-                                    viewModel.onEvent(NotesEvent.RestoreNote)
-                                }
-                            }
-
-                            Timber.i("At After Launch length is ${state.notes.size}")
-
-
-                        }
-
-
-                    )
-
-                    //put spaces between note items
-
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(text = "Empty")
                 }
+            }else {
 
+                //NOTES_LIST_SECTION
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+                    items(state.notes) { note ->
+                        NoteItem(note = note,
+                                modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+
+                                            navController.navigate(
+                                                    Screens.AddEditNoteScreen.route +
+
+                                                            "?noteId=${note.id}&noteColor=${note.color}"
+                                            )
+                                        },
+
+                                onDelete = {
+
+
+
+                                    /* showing a snackbar needs a coroutine as it takes
+                                      time to show*/
+
+                                    //'showSnackbar' should be called only from a coroutine or another suspend function
+                                    scope.launch {
+                                        viewModel.onEvent(NotesEvent.DeleteNote(note = note))
+                                        //we need to put snackbar as a val to check the action
+                                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                                                message = "Note Deleted",
+                                                actionLabel = "Undo",
+
+                                                )
+                                        Timber.i("At B4R length is ${state.notes.size}")
+                                        //check result for action performed
+                                        if (result==SnackbarResult.ActionPerformed) {
+
+                                            viewModel.onEvent(NotesEvent.RestoreNote)
+                                        }
+                                    }
+
+                                    Timber.i("At After Launch length is ${state.notes.size}")
+
+
+                                }
+
+
+                        )
+
+                        //put spaces between note items
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+
+                }
             }
+
+
         }
     }
 
