@@ -23,3 +23,32 @@ interface NoteRepository {
     //pass note to delete from database
     suspend fun deleteNote(note: Note)
 }
+
+
+
+/*
+            val currencyList: List<String> = when (countryJsonObj.has("currencies")) {
+
+                true -> {
+
+                    val list = mutableListOf<String>()
+                    list.clear()
+                    val currencyData = countryJsonObj.getJSONObject("currencies")
+
+                    currencyData.keys()
+                            .forEach { curr ->
+
+                                val currencyNameObj = currencyData.getJSONObject(curr)
+
+                                val currency = currencyNameObj.getString("name")
+                                list.add(currency)
+
+
+                            }
+                    list
+                }
+                false -> {
+                    listOf("Not found")
+                }
+
+            }*/

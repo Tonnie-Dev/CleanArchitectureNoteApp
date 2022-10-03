@@ -16,7 +16,7 @@ class GetNotesUseCase(private val repo: NoteRepository) {
     operator fun invoke(noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)):
             Flow<List<Note>> {
 
-        //return the list from the repository
+        //return the flow list from the repository
         return repo.getNotes()
         //then map the returned notes/ flow
             .map { notes ->

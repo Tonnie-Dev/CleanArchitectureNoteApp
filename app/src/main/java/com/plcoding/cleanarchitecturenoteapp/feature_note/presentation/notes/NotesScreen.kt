@@ -24,6 +24,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.util.Scre
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalAnimationApi
 @Composable
 fun NotesScreen(navController: NavController, viewModel: NotesViewModel = hiltViewModel()) {

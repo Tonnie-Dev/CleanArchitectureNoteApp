@@ -12,7 +12,7 @@ data class Note(
     val timeStamp: Long,
     val color: Int,
 
-    @PrimaryKey
+    @PrimaryKey()
     val id: Int? = null
 ) {
 
